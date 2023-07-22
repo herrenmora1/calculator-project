@@ -1,3 +1,3 @@
 # calculator-project
-calculator project ? THE JACKULATOR >:)
-writing using pythongui, python wrapper of tkinter
+calculator project ? THE JACKULATOR >:) REVISED VERSION
+F PYSIMPLEGUI THIS THING AINT SIMPLE AT ALL AND ITS DOOKIE WATER >:(
