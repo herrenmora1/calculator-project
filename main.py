@@ -37,9 +37,32 @@ import tkinter as tk
 ###################################### END OF DOOKIE WATER PYSIMPLEGUI ######################################
 
 root = tk.Tk() #WINDOW
+root.title("JACKULATOR REVISED V2")
 
-#TODO: PUT THINGS IN HERE
-message = tk.Label(root, text="Hello world!") #creates message widget
+####### window specifications #######
+
+#window size 
+window_width = 360
+window_height = 500
+
+#declare minimum window size 
+root.minsize(360, 500)
+
+#get screen dimension 
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+#find center of screen
+center_x = int(screen_width/2 - window_width / 2)
+center_y = int(screen_height/2 - window_height / 2)
+
+#set window to center of screen
+root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
+####### end of window specifications #######
+
+#TODO: PUT WIDGETS IN HERE
+message = tk.Label(root, text="haha made you look") #creates message widget
 message.pack() #shows the widget
 
 #keep the window displaying
