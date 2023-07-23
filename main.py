@@ -65,15 +65,31 @@ root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
 ####### end of window specifications #######
 
+
+
+
+
+
+#point out global total variable
+total = '0' 
+
+#methods for each button press ? 
+
+def numpress(num):
+    global total 
+    total += num
+    displaytotal.set(total)
+
 #TODO: PUT WIDGETS IN HERE
 
-total = 0 #cus calculator
-message = tk.Label(root, text=total) #creates message widget
+displaytotal = tk.StringVar()
+
+message = tk.Label(root, textvariable=displaytotal) #creates message widget
 message.pack() #shows the widget
 
 #attempt at a button doesn't work yet 
 seven = tk.Button(root, text=7)
-seven.bind('<KP_7>', seven_pressed)
+seven.bind('<Button>', )
 seven.focus()
 seven.pack()
 #end of button attempt 
