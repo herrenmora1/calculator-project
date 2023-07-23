@@ -1,6 +1,10 @@
 import PySimpleGUI as sg 
 import tkinter as tk
 
+def seven_pressed(event):
+    print('7')
+    total = int(str(total) + '7')
+
 ###################################### YEAH PYSIMPLEGUI IS GARBO DOOKIE WATER NAH I AINT TAKING IT BACK ######################################
 # total = 0
 # layout = [[sg.Text(text='0', size=(15,2), key='number', justification='right')], 
@@ -62,8 +66,17 @@ root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 ####### end of window specifications #######
 
 #TODO: PUT WIDGETS IN HERE
-message = tk.Label(root, text="haha made you look") #creates message widget
+
+total = 0 #cus calculator
+message = tk.Label(root, text=total) #creates message widget
 message.pack() #shows the widget
+
+#attempt at a button doesn't work yet 
+seven = tk.Button(root, text=7)
+seven.bind('<KP_7>', seven_pressed)
+seven.focus()
+seven.pack()
+#end of button attempt 
 
 #keep the window displaying
 root.mainloop()
