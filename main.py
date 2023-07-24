@@ -10,53 +10,92 @@ opFlag = False
 #methods for each button press ? 
 
 #TODO: IF OPFLAG, SET TO FALSE WHEN NUMBER PRESSED 
+
+def checkOpFlag():
+    global opFlag
+    global total
+    
+    if opFlag:
+       total = 0
+       opFlag = False 
+
 def zero_pressed():
     global total 
+
+    checkOpFlag()
+    
     total = int(str(total) + '0')
     message["text"] = total 
 
 def one_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '1')
     message["text"] = total 
 
 def two_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '2')
     message["text"] = total 
 
 def three_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '3')
     message["text"] = total 
 
 def four_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '4')
     message["text"] = total 
 
 def five_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '5')
     message["text"] = total 
 
 def six_pressed():
     global total 
+
+    checkOpFlag
+    
     total = int(str(total) + '6')
     message["text"] = total 
 
 def seven_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '7')
     message["text"] = total 
 
 def eight_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '8')
     message["text"] = total 
     
 def nine_pressed():
     global total 
+
+    checkOpFlag
+
     total = int(str(total) + '9')
     message["text"] = total 
 
@@ -158,7 +197,7 @@ def equal():
 
     finishOperation() #finishes previous operation 
     opFlag = True 
-    
+
     print(total)
     #TODO
 
