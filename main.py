@@ -4,35 +4,9 @@ import tkinter as tk
 total = 0
 
 #methods for each button press ? 
-
-def seven_pressed():
+def zero_pressed():
     global total 
-    total = int(str(total) + '7')
-    message["text"] = total 
-
-def eight_pressed():
-    global total 
-    total = int(str(total) + '8')
-    message["text"] = total 
-    
-def nine_pressed():
-    global total 
-    total = int(str(total) + '9')
-    message["text"] = total 
-
-def four_pressed():
-    global total 
-    total = int(str(total) + '4')
-    message["text"] = total 
-
-def five_pressed():
-    global total 
-    total = int(str(total) + '5')
-    message["text"] = total 
-
-def six_pressed():
-    global total 
-    total = int(str(total) + '6')
+    total = int(str(total) + '0')
     message["text"] = total 
 
 def one_pressed():
@@ -50,9 +24,34 @@ def three_pressed():
     total = int(str(total) + '3')
     message["text"] = total 
 
-def zero_pressed():
+def four_pressed():
     global total 
-    total = int(str(total) + '0')
+    total = int(str(total) + '4')
+    message["text"] = total 
+
+def five_pressed():
+    global total 
+    total = int(str(total) + '5')
+    message["text"] = total 
+
+def six_pressed():
+    global total 
+    total = int(str(total) + '6')
+    message["text"] = total 
+
+def seven_pressed():
+    global total 
+    total = int(str(total) + '7')
+    message["text"] = total 
+
+def eight_pressed():
+    global total 
+    total = int(str(total) + '8')
+    message["text"] = total 
+    
+def nine_pressed():
+    global total 
+    total = int(str(total) + '9')
     message["text"] = total 
 
 def clear():
