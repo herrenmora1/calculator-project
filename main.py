@@ -1,9 +1,15 @@
 import tkinter as tk
+import math
 
-#point out global total variable
+#point out global variables
 total = 0
+temp = 0
+lastOperator = '' #options should be /, *, -, +
+opFlag = False
 
 #methods for each button press ? 
+
+#TODO: IF OPFLAG, SET TO FALSE WHEN NUMBER PRESSED 
 def zero_pressed():
     global total 
     total = int(str(total) + '0')
@@ -56,6 +62,9 @@ def nine_pressed():
 
 def clear():
     global total
+    global lastOperator
+
+    lastOperator = ''
     total = 0
     message["text"] = total
 
@@ -70,24 +79,87 @@ def invert():
     message["text"] = total
 
 #^ OPERATION FUNCTIONS HERE ^#
+def finishOperation():
+    global temp
+    global total
+    global lastOperator
+
+    if lastOperator == '/':
+        total = temp/total #updates total
+    elif lastOperator == 'x':
+        total *= temp
+    elif lastOperator == '-':
+        total = temp-total
+    elif lastOperator == '+':
+        total += temp
+    
+    lastOperator = ''
+    message['text'] = total #updates total displayed
+
 def divide():
     global total
+    global temp
+    global lastOperator
+    global opFlag
+
+    finishOperation() #finishes previous operation
+
+    lastOperator = '/' #sets current operation as division
+    temp = total #sets temp = current display value 
+    opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    print("divide")
     #TODO
 
 def multiply():
     global total
+    global temp
+    global lastOperator
+    global opFlag
+
+    finishOperation() #finishes previous operation
+
+    lastOperator = 'x' #sets current operation as division
+    temp = total #sets temp = current display value 
+    opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    print("multiply")
     #TODO
 
 def subtract():
     global total
+    global temp
+    global lastOperator
+    global opFlag
+
+    finishOperation() #finishes previous operation
+
+    lastOperator = '-' #sets current operation as division
+    temp = total #sets temp = current display value 
+    opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    print("subtract")
     #TODO
 
 def add():
     global total
+    global temp
+    global lastOperator
+    global opFlag
+
+    finishOperation() #finishes previous operation
+
+    lastOperator = '+' #sets current operation as division
+    temp = total #sets temp = current display value 
+    opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    print("add")
     #TODO
 
 def equal():
     global total
+    global opFlag
+
+    finishOperation() #finishes previous operation 
+    opFlag = True 
+    
+    print(total)
     #TODO
 
 #^ END OF OPERATION FUNCTIONS HERE ^#
@@ -96,8 +168,9 @@ def decimal():
     global total
     #TODO: REALLY HONESTLY NOT SURE WHAT TO DO HERE
 
+
 root = tk.Tk() #WINDOW
-root.title("JACKULATOR REVISED V2")
+root.title("E-JACKULATOR REVISED V2")
 
 ######! window specifications !######
 #window's rows and columns 
@@ -118,8 +191,7 @@ center_y = int(screen_height/2 - window_height / 2)
 root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 ######! end of window specifications !######
 
-#TODO: PUT BUTTON/OPERATION WIDGETS IN HERE
-
+#THE TOTAL NUMBER THING
 message = tk.Label(master=root, text=total, justify="right", anchor='e') #creates message widget
 message.grid(row=0,column=0, columnspan=4)
 
@@ -186,6 +258,7 @@ decimal.grid(row=5, column=2, sticky="nsew")
 
 equal = tk.Button(master=root, text="=", command=equal)
 equal.grid(row=5, column=3, sticky="nsew")
+#? BUTTON SECTION DONE?#
 
 #keep the window displaying
 root.mainloop()
