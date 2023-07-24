@@ -55,6 +55,48 @@ def zero_pressed():
     total = int(str(total) + '0')
     message["text"] = total 
 
+def clear():
+    global total
+    total = 0
+    message["text"] = total
+
+def backspace():
+    global total 
+    total = int(total / 10)
+    message["text"] = total
+
+def invert():
+    global total 
+    total = -1 * total 
+    message["text"] = total
+
+#^ OPERATION FUNCTIONS HERE ^#
+def divide():
+    global total
+    #TODO
+
+def multiply():
+    global total
+    #TODO
+
+def subtract():
+    global total
+    #TODO
+
+def add():
+    global total
+    #TODO
+
+def equal():
+    global total
+    #TODO
+
+#^ END OF OPERATION FUNCTIONS HERE ^#
+
+def decimal():
+    global total
+    #TODO: REALLY HONESTLY NOT SURE WHAT TO DO HERE
+
 root = tk.Tk() #WINDOW
 root.title("JACKULATOR REVISED V2")
 
@@ -79,10 +121,23 @@ root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
 #TODO: PUT BUTTON/OPERATION WIDGETS IN HERE
 
-message = tk.Label(master=root, text=total) #creates message widget
+message = tk.Label(master=root, text=total, justify="right", anchor='e') #creates message widget
 message.grid(row=0,column=0, columnspan=4)
 
-#? NUMBER BUTTON SECTION ?#
+#? BUTTON SECTION ?#
+#ROW 1
+invert = tk.Button(master=root, text='+/-', command=invert)
+invert.grid(row=1,column=0,sticky="nsew")
+
+backspace = tk.Button(master=root, text='CE', command=backspace)
+backspace.grid(row=1,column=1,sticky="nsew")
+
+#TODO: make this work with floats when the decimal comes in 
+clear = tk.Button(master=root, text='C', command=clear)
+clear.grid(row=1,column=2,sticky="nsew")
+
+divide = tk.Button(master=root, text='/', command=divide)
+divide.grid(row=1,column=3,sticky="nsew") 
 
 #ROW 2
 seven = tk.Button(master=root, text='7', command=seven_pressed)
@@ -94,6 +149,9 @@ eight.grid(row=2,column=1,sticky="nsew")
 nine = tk.Button(master=root, text='9', command=nine_pressed)
 nine.grid(row=2,column=2,sticky="nsew")
 
+multiply = tk.Button(master=root, text='x', command=multiply)
+multiply.grid(row=2,column=3,sticky="nsew")
+
 #ROW 3
 four = tk.Button(master=root, text='4', command=four_pressed)
 four.grid(row=3,column=0,sticky="nsew")
@@ -104,6 +162,9 @@ five.grid(row=3,column=1,sticky="nsew")
 six = tk.Button(master=root, text='6', command=six_pressed)
 six.grid(row=3,column=2,sticky="nsew")
 
+subtract = tk.Button(master=root, text='-', command=subtract)
+subtract.grid(row=3,column=3,sticky="nsew")
+
 #ROW 4
 one = tk.Button(master=root, text='1', command=one_pressed)
 one.grid(row=4,column=0,sticky="nsew")
@@ -113,6 +174,19 @@ two.grid(row=4,column=1,sticky="nsew")
 
 three = tk.Button(master=root, text='3', command=three_pressed)
 three.grid(row=4,column=2,sticky="nsew")
+
+add = tk.Button(master=root, text='+', command=add)
+add.grid(row=4,column=3,sticky="nsew")
+
+#ROW 5
+zero = tk.Button(master=root, text='0', command=zero_pressed)
+zero.grid(row=5, column=0, columnspan=2, sticky="nsew")
+
+decimal = tk.Button(master=root, text='.', command=decimal)
+decimal.grid(row=5, column=2, sticky="nsew")
+
+equal = tk.Button(master=root, text="=", command=equal)
+equal.grid(row=5, column=3, sticky="nsew")
 
 #keep the window displaying
 root.mainloop()
