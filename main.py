@@ -30,7 +30,7 @@ def zero_pressed():
 def one_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '1')
     message["text"] = total 
@@ -38,7 +38,7 @@ def one_pressed():
 def two_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '2')
     message["text"] = total 
@@ -46,7 +46,7 @@ def two_pressed():
 def three_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '3')
     message["text"] = total 
@@ -54,7 +54,7 @@ def three_pressed():
 def four_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '4')
     message["text"] = total 
@@ -62,7 +62,7 @@ def four_pressed():
 def five_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '5')
     message["text"] = total 
@@ -70,7 +70,7 @@ def five_pressed():
 def six_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
     
     total = int(str(total) + '6')
     message["text"] = total 
@@ -78,7 +78,7 @@ def six_pressed():
 def seven_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '7')
     message["text"] = total 
@@ -86,7 +86,7 @@ def seven_pressed():
 def eight_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '8')
     message["text"] = total 
@@ -94,7 +94,7 @@ def eight_pressed():
 def nine_pressed():
     global total 
 
-    checkOpFlag
+    checkOpFlag()
 
     total = int(str(total) + '9')
     message["text"] = total 
@@ -124,15 +124,19 @@ def finishOperation():
     global lastOperator
 
     if lastOperator == '/':
-        total = temp/total #updates total
+        operation = temp/total 
+        #temp = operation #TODO: idea for consecutive operations
+        total = operation
     elif lastOperator == 'x':
-        total *= temp
+        operation = total * temp
+        total = operation
     elif lastOperator == '-':
-        total = temp-total
+        operation = temp-total
+        total = operation
     elif lastOperator == '+':
-        total += temp
+        operation = total + temp
+        total = operation
     
-    lastOperator = ''
     message['text'] = total #updates total displayed
 
 def divide():
@@ -188,17 +192,19 @@ def add():
     lastOperator = '+' #sets current operation as division
     temp = total #sets temp = current display value 
     opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
-    print("add")
     #TODO
 
 def equal():
     global total
     global opFlag
+    global lastOperator
+    global temp
 
+    print(f"{temp} {lastOperator} {total}")
     finishOperation() #finishes previous operation 
     opFlag = True 
 
-    print(total)
+    
     #TODO
 
 #^ END OF OPERATION FUNCTIONS HERE ^#
