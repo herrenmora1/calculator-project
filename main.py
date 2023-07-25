@@ -9,113 +9,78 @@ opFlag = False
 
 #methods for each button press ? 
 
-#TODO: IF OPFLAG, SET TO FALSE WHEN NUMBER PRESSED 
-
 def checkOpFlag():
     global opFlag
     global total
     
     if opFlag:
-       total = 0
+       message['text'] = 0
        opFlag = False 
 
 def zero_pressed():
-    global total 
-
     checkOpFlag()
     
-    total = int(str(total) + '0')
-    message["text"] = total 
+    message["text"] = str(int(message['text'] + '0'))
 
 def one_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '1')
-    message["text"] = total 
+    message['text'] = str(int(message['text'] + '1'))
 
 def two_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '2')
-    message["text"] = total 
+    message["text"] = str(int(message['text'] + '2'))
 
 def three_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '3')
-    message["text"] = total 
+    message["text"] = str(int(message['text'] + '3'))
 
 def four_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '4')
-    message["text"] = total 
+    message["text"] = str(int(message["text"] + '4'))
 
 def five_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '5')
-    message["text"] = total 
+    message["text"] = str(int(message["text"] + '5'))
 
 def six_pressed():
-    global total 
-
     checkOpFlag()
     
-    total = int(str(total) + '6')
-    message["text"] = total 
+    message["text"] = str(int(message["text"] + '6'))
 
 def seven_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '7')
-    message["text"] = total 
+    message["text"] = str(int(message["text"] + '7'))
 
 def eight_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '8')
-    message["text"] = total 
+    message["text"] = str(int(message["text"] + '8'))
     
 def nine_pressed():
-    global total 
-
     checkOpFlag()
 
-    total = int(str(total) + '9')
-    message["text"] = total 
+    message["text"] = str(int(message["text"] + '9'))
 
 def clear():
-    global total
     global lastOperator
 
     lastOperator = ''
-    total = 0
-    message["text"] = total
+    message["text"] = '0'
 
 def backspace():
-    global total 
-    total = int(total / 10)
-    message["text"] = total
+    if len(message['text']) == 1:
+        message['text'] = 0
+    else:
+        message['text'] = message['text'][0:len(message['text'])-1]
 
 def invert():
-    global total 
-    total = -1 * total 
-    message["text"] = total
+    message["text"] = str(int(message['text'])*-1)
 
 #^ OPERATION FUNCTIONS HERE ^#
 def finishOperation():
@@ -237,7 +202,7 @@ root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 ######! end of window specifications !######
 
 #THE TOTAL NUMBER THING
-message = tk.Label(master=root, text=total, justify="right", anchor='e') #creates message widget
+message = tk.Label(master=root, text='0', justify="right", anchor='e') #creates message widget
 message.grid(row=0,column=0, columnspan=4)
 
 #? BUTTON SECTION ?#
