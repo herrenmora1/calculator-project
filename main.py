@@ -18,61 +18,51 @@ def checkOpFlag():
        opFlag = False 
 
 def zero_pressed():
-    clearTemp()
     checkOpFlag()
     
     message["text"] = str(int(message['text'] + '0'))
 
 def one_pressed():
-    clearTemp()
     checkOpFlag()
 
     message['text'] = str(int(message['text'] + '1'))
 
 def two_pressed():
-    clearTemp()
     checkOpFlag()
 
     message["text"] = str(int(message['text'] + '2'))
 
 def three_pressed():
-    clearTemp()
     checkOpFlag()
 
     message["text"] = str(int(message['text'] + '3'))
 
 def four_pressed():
-    clearTemp()
     checkOpFlag()
 
     message["text"] = str(int(message["text"] + '4'))
 
 def five_pressed():
-    clearTemp()
     checkOpFlag()
 
     message["text"] = str(int(message["text"] + '5'))
 
 def six_pressed():
-    clearTemp()
     checkOpFlag()
     
     message["text"] = str(int(message["text"] + '6'))
 
 def seven_pressed():
-    clearTemp()
     checkOpFlag()
 
     message["text"] = str(int(message["text"] + '7'))
 
 def eight_pressed():
-    clearTemp()
     checkOpFlag()
 
     message["text"] = str(int(message["text"] + '8'))
     
 def nine_pressed():
-    clearTemp()
     checkOpFlag()
 
     message["text"] = str(int(message["text"] + '9'))
@@ -105,7 +95,7 @@ def tempCheck():
 
     if temp != 0:
         lastOperator = ''
-    clearTemp() #! not sure whether the placement of this makes a big difference, it might
+    clearTemp() 
 
 def clearTemp():
     global temp 
@@ -253,7 +243,7 @@ def equal():
 
 def decimal():
     global total
-    #TODO: REALLY HONESTLY NOT SURE WHAT TO DO HERE
+    #TODO: WE GOT THIS CHECK THE STICKY NOTES
 
 
 root = tk.Tk() #WINDOW
