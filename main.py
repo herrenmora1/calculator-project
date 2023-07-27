@@ -174,6 +174,13 @@ def clearTemp():
     global temp 
     temp = 0
 
+def updateHistory(text:str):
+    history.configure(state="normal")
+    history.insert("1.0", text + '\n\n')
+    history.configure(state="disabled")
+    #history['text'] = text + '\n\n' + history['text'] 
+    #history['text'].see("1.0")
+
 def repeatOperation():
     global temp 
     global total 
@@ -184,7 +191,7 @@ def repeatOperation():
     # if opFlag is False, total is now message['text'] and temp remains the same. a BUG will happen if operator is immediately clicked before =. 
 
     if lastOperator == '/':
-        if temp == 0: #TODO: DO THIS CHECK FOR EVERY OPERATION HERE
+        if temp == 0: 
             operation = total / float(decimalEnding()) #assumes that total is an int
             temp = float(decimalEnding()) #^ IMPORTANT FOR REPEATS
         else:
@@ -226,14 +233,20 @@ def repeatOperation():
 
     if temp == 0:
         if lastOperator != '':
-            print(str(total) + f"{lastOperator}" + decimalEnding())
+            if isInteger(float(decimalEnding())):
+                updateHistory(str(total) + f"{lastOperator}" + str(int(decimalEnding())) + "=" + str(operation))
+            else:
+                updateHistory(str(total) + f"{lastOperator}" + decimalEnding() + '=' + str(operation))
         else:
-            print(message['text'])
+            updateHistory(message['text'] +'='+ message['text'])
     elif temp != 0:
         if lastOperator != '':
-            print(str(total) + f"{lastOperator}" + str(temp))
+            if isInteger(temp):
+                updateHistory(str(total) + f"{lastOperator}" + str(int(temp)) + '=' + str(operation))
+            else:
+                updateHistory(str(total) + f"{lastOperator}" + str(temp) + '=' + str(operation))
         else:
-            print(message['text'])
+            updateHistory(message['text']+'='+message['text'])
 
     total = operation
     message['text'] = str(total)
@@ -257,9 +270,7 @@ def finishOperation():
         operation = int(operation) #set operation to its integer form (without the decimal)
 
     if lastOperator != '':
-        print(str(total) + f"{lastOperator}" + decimalEnding())
-    else:
-        print(str(operation))
+        updateHistory(str(total) + f"{lastOperator}" + decimalEnding() + '=' + str(operation))
 
     total = operation
     message['text'] = str(total) #updates total displayed
@@ -349,12 +360,14 @@ root.title("E-JACKULATOR REVISED V2")
 ######! window specifications !######
 #window's rows and columns 
 root.rowconfigure([0,1,2,3,4,5], minsize=50, weight=1)
-root.columnconfigure([0,1,2,3], minsize=50, weight=1)
+root.columnconfigure([0,1,2,3,4,5,6], minsize=50, weight=1)
 #window size 
-window_width = 360
+window_width = 500
 window_height = 500
 #declare minimum window size 
-root.minsize(360, 500)
+root.minsize(500, 500)
+#prevent resize
+root.resizable(False, False)
 #get screen dimension 
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
@@ -366,9 +379,31 @@ root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 ######! end of window specifications !######
 
 #THE TOTAL NUMBER THING
-message = tk.Label(master=root, text='0', justify="right", anchor='e') #creates message widget
-message.grid(row=0,column=0, columnspan=4)
+messageFrame = tk.Frame(master=root, highlightthickness=2, highlightbackground="black")
+messageFrame.grid(row=0, column=0, columnspan=4, sticky="nsew")
+messageFrame.rowconfigure([0], minsize=50, weight=1)
+messageFrame.columnconfigure([0,1,2,3,4], minsize=50, weight=1)
 
+message = tk.Label(master=messageFrame, text='0', justify="right") #creates message widget
+message.grid(row=0,column=0, columnspan=5, sticky="e", padx=20)
+
+#? HISTORY SECTION ?#
+historyFrame = tk.Frame(master=root, highlightbackground="black", highlightthickness=1)
+historyFrame.grid(row=0, column=4, rowspan=6, columnspan=3, sticky="nesw", padx=1)
+historyFrame.rowconfigure([0,1,2,3,4,5], minsize=50, weight=1)
+historyFrame.columnconfigure([0,1], minsize=50, weight=1)
+
+#! scroll bar within history section !#
+scroll = tk.Scrollbar(master=historyFrame, orient="vertical")
+scroll.grid(row = 0, column = 1, rowspan = 6, sticky="nes")
+
+historyLabel = tk.Label(master=historyFrame, text='History:')
+historyLabel.grid(row=0, column=0, columnspan=2, sticky="nw") 
+
+history = tk.Text(master=historyFrame, state="disabled", height=50, width=25, yscrollcommand=scroll.set)
+history.grid(row=1, column=0, rowspan=5, columnspan=2, sticky="nw")
+
+scroll.config(command=history.yview)
 #? BUTTON SECTION ?#
 #ROW 1
 invert = tk.Button(master=root, text='+/-', command=invert)
@@ -377,7 +412,6 @@ invert.grid(row=1,column=0,sticky="nsew")
 backspace = tk.Button(master=root, text='CE', command=backspace)
 backspace.grid(row=1,column=1,sticky="nsew")
 
-#TODO: make this work with floats when the decimal comes in 
 clear = tk.Button(master=root, text='C', command=clear)
 clear.grid(row=1,column=2,sticky="nsew")
 
