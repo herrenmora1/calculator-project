@@ -1,94 +1,167 @@
 import tkinter as tk
-import math
+import math #idk whether i want to use certain math features or not HAHA
 
 #point out global variables
 total = 0
 temp = 0
 lastOperator = '' #options should be /, *, -, +
 opFlag = False
+decimalFlag = False
 
 #methods for each button press ? 
 
 def checkOpFlag():
     global opFlag
     global total
+    global decimalFlag
     
     if opFlag:
        message['text'] = '0'
        opFlag = False 
+       decimalFlag = False
 
 def zero_pressed():
+    global decimalFlag
     checkOpFlag()
     
-    message["text"] = str(int(message['text'] + '0'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '0'))
+    else:
+        message["text"] = str(int(message['text'] + '0'))
 
 def one_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message['text'] = str(int(message['text'] + '1'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '1'))
+    else:
+        message['text'] = str(int(message['text'] + '1'))
 
 def two_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message["text"] = str(int(message['text'] + '2'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '2'))
+    else:
+        message["text"] = str(int(message['text'] + '2'))
 
 def three_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message["text"] = str(int(message['text'] + '3'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '3'))
+    else:
+        message["text"] = str(int(message['text'] + '3'))
 
 def four_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message["text"] = str(int(message["text"] + '4'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '4'))
+    else:
+        message["text"] = str(int(message["text"] + '4'))
 
 def five_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message["text"] = str(int(message["text"] + '5'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '5'))
+    else:
+        message["text"] = str(int(message["text"] + '5'))
 
 def six_pressed():
+    global decimalFlag
     checkOpFlag()
-    
-    message["text"] = str(int(message["text"] + '6'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '6'))
+    else:
+        message["text"] = str(int(message["text"] + '6'))
 
 def seven_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message["text"] = str(int(message["text"] + '7'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] +'7'))
+    else:
+        message["text"] = str(int(message["text"] + '7'))
 
 def eight_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message["text"] = str(int(message["text"] + '8'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '8'))
+    else:
+        message["text"] = str(int(message["text"] + '8'))
     
 def nine_pressed():
+    global decimalFlag
     checkOpFlag()
 
-    message["text"] = str(int(message["text"] + '9'))
+    if decimalFlag:
+        message['text'] = str(float(message['text'] + '9'))
+    else:
+        message["text"] = str(int(message["text"] + '9'))
+    
+# NUMBERS END HERE 
+
+#* DECIMALS ARE ANNOYING *#
+def decimalEnding():
+    if message['text'][-1] == '.':
+        return message['text'] + '0'
+    else:
+        return message['text']
+
+def isInteger(number:float):
+    integer = abs(int(number))
+    check = abs(number) - integer
+    return check == 0
+
+def decimal():
+    global total
+    global decimalFlag
+
+    checkOpFlag()
+    if not decimalFlag:
+        message['text'] = str(message['text'] + '.')
+        decimalFlag = True
+    #TODO: WE GOT THIS CHECK THE STICKY NOTES
+#* DECIMALS END HERE *#
 
 def clear():
     global lastOperator
     global total
+    global decimalFlag
 
     clearTemp()
 
+    decimalFlag = False
     lastOperator = ''
     total = 0
     message["text"] = '0'
 
 def backspace():
+    global decimalFlag
     clearTemp()
     if len(message['text']) == 1:
         message['text'] = 0
     else:
         message['text'] = message['text'][0:len(message['text'])-1]
 
+    #check if decimal in message['text'] after CE    
+    if '.' not in message['text']:
+        decimalFlag = False
+
 def invert():
     clearTemp()
     message["text"] = str(int(message['text'])*-1)
 
-#^ OPERATION FUNCTIONS HERE ^#
 def tempCheck():
     global temp 
     global lastOperator
@@ -105,45 +178,62 @@ def repeatOperation():
     global temp 
     global total 
     global lastOperator
+    global opFlag
+
+    # if consecutive, temp != 0. if not consecutive, temp != 0. difference is whether opFlag is True or False. 
+    # if opFlag is False, total is now message['text'] and temp remains the same. a BUG will happen if operator is immediately clicked before =. 
 
     if lastOperator == '/':
         if temp == 0: #TODO: DO THIS CHECK FOR EVERY OPERATION HERE
-            operation = total / int(message['text']) #assumes that total is an int
-            temp = int(message['text']) #^ IMPORTANT FOR REPEATS
-            print(str(total) + "/" + message['text'])
+            operation = total / float(decimalEnding()) #assumes that total is an int
+            temp = float(decimalEnding()) #^ IMPORTANT FOR REPEATS
         else:
+            if not opFlag:
+                total = float(decimalEnding())
             operation = total / temp
-            print(str(total) + "/" + str(temp))
 
     elif lastOperator == 'x':
         if temp == 0:
-            operation = total * int(message['text'])
-            temp = int(message['text'])
-            print(str(total) + "x" + message['text'])
+            operation = total * float(decimalEnding())
+            temp = float(decimalEnding())
         else:
+            if not opFlag:
+                total = float(decimalEnding())
             operation = total * temp
-            print(str(total) + "x" + str(temp))
 
     elif lastOperator == '-':
         if temp == 0:
-            operation = total - int(message['text'])
-            temp = int(message['text'])
-            print(str(total) + "-" + message['text'])
+            operation = total - float(decimalEnding())
+            temp = float(decimalEnding())
         else:
+            if not opFlag:
+                total = float(decimalEnding())
             operation = total - temp
-            print(str(total) + "-" + str(temp))
 
     elif lastOperator == '+':
         if temp == 0:
-            operation = total + int(message['text'])
-            temp = int(message['text'])
-            print(str(total) + "+" + message['text'])
+            operation = total + float(decimalEnding())
+            temp = float(decimalEnding())
         else:
+            if not opFlag:
+                total = float(decimalEnding())
             operation = total + temp
-            print(str(total) + "+" + str(temp))
     else:
-        operation = int(message['text'])
-        print(str(operation))
+        operation = float(decimalEnding())
+
+    if isInteger(operation):
+        operation = int(operation) #set operation to its integer form (without the decimal)
+
+    if temp == 0:
+        if lastOperator != '':
+            print(str(total) + f"{lastOperator}" + decimalEnding())
+        else:
+            print(message['text'])
+    elif temp != 0:
+        if lastOperator != '':
+            print(str(total) + f"{lastOperator}" + str(temp))
+        else:
+            print(message['text'])
 
     total = operation
     message['text'] = str(total)
@@ -152,38 +242,43 @@ def finishOperation():
     global total
     global lastOperator
 
-
-    
     if lastOperator == '/':
-        operation = total / int(message['text']) #assumes that total is an int
-        print(str(total) + "/" + message['text'])
+        operation = total / float(decimalEnding()) #assumes that total is an int
     elif lastOperator == 'x':
-        operation = total * int(message['text'])
-        print(str(total) + "*" + message['text'])
+        operation = total * float(decimalEnding())
     elif lastOperator == '-':
-        operation = total - int(message['text'])
-        print(str(total) + "-" + message['text'])
+        operation = total - float(decimalEnding())
     elif lastOperator == '+':
-        operation = total + int(message['text'])
-        print(str(total) + "+" + message['text'])
+        operation = total + float(decimalEnding())
     else:
-        operation = int(message['text'])
-        print(str(operation))
+        operation = float(decimalEnding())
     
+    if isInteger(operation):
+        operation = int(operation) #set operation to its integer form (without the decimal)
+
+    if lastOperator != '':
+        print(str(total) + f"{lastOperator}" + decimalEnding())
+    else:
+        print(str(operation))
+
     total = operation
     message['text'] = str(total) #updates total displayed
+
+#^ OPERATION FUNCTIONS HERE ^#
 
 def divide():
     global total
     global temp
     global lastOperator
     global opFlag
+    global decimalFlag
 
     tempCheck()
     finishOperation() #finishes previous operation
 
     lastOperator = '/' #sets current operation as division
     opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    decimalFlag = False
     print("divide")
     #TODO
 
@@ -192,12 +287,14 @@ def multiply():
     global temp
     global lastOperator
     global opFlag
+    global decimalFlag
 
     tempCheck()
     finishOperation() #finishes previous operation
 
     lastOperator = 'x' #sets current operation as division
     opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    decimalFlag = False
     print("multiply")
     #TODO
 
@@ -206,12 +303,14 @@ def subtract():
     global temp
     global lastOperator
     global opFlag
+    global decimalFlag
 
     tempCheck()
     finishOperation() #finishes previous operation
 
     lastOperator = '-' #sets current operation as division
     opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    decimalFlag = False
     print("subtract")
     #TODO
 
@@ -220,12 +319,14 @@ def add():
     global temp
     global lastOperator
     global opFlag
+    global decimalFlag
 
     tempCheck()
     finishOperation() #finishes previous operation
 
     lastOperator = '+' #sets current operation as division
     opFlag = True #lets calculator know that operation button was JUST pressed, therefore next number click will reset total = 0 
+    decimalFlag = False
     #TODO
 
 def equal():
@@ -233,18 +334,14 @@ def equal():
     global opFlag
     global lastOperator
     global temp
+    global decimalFlag
 
     repeatOperation()
 
     opFlag = True 
-
+    decimalFlag = False
 
 #^ END OF OPERATION FUNCTIONS HERE ^#
-
-def decimal():
-    global total
-    #TODO: WE GOT THIS CHECK THE STICKY NOTES
-
 
 root = tk.Tk() #WINDOW
 root.title("E-JACKULATOR REVISED V2")
